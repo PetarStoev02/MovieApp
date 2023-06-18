@@ -9,9 +9,9 @@ async function request(method, data) {
   if (data) {
     options.headers["Content-Type"] = "application/json";
     options.body = JSON.stringify(data);
-  }if(method === "DELETE"){
-    options.body = ""
-
+  }
+  if (method === "DELETE") {
+    options.body = "";
   }
 
   let res = "";
@@ -20,9 +20,8 @@ async function request(method, data) {
   } else if (method === "POST") {
     res = await fetch(host + "/movies", options);
   } else if (method === "PATCH") {
-    res = await fetch(host + `/movies/${data.id}`, options);
+    res = await fetch(host + `/movies/${data._id}`, options);
   } else if (method === "DELETE") {
-    console.log(host + `/movies/${data}`)
     res = await fetch(host + `/movies/${data}`, options);
   }
 

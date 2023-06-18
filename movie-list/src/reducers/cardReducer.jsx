@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { postMovies, deleteMovies } from "../api/serverAPI";
+import { postMovies, deleteMovies, patchMovies } from "../api/serverAPI";
 import { useSelector, useDispatch } from "react-redux";
 
 const initialState = {
@@ -55,8 +55,6 @@ export const toggleFavoriteAsync = (cardId) => async (dispatch) => {
       list: "favorites",
     };
 
-    console.log(Object.entries(data) + "favorite");
-
     await postMovies(data);
 
     dispatch(toggleFavorite(cardId));
@@ -73,8 +71,6 @@ export const toggleBookmarkAsync = (cardId) => async (dispatch) => {
       list: "watched",
     };
 
-    console.log(Object.entries(data) + "watched");
-
     await postMovies(data);
 
     dispatch(toggleBookmark(cardId));
@@ -90,8 +86,6 @@ export const toggleReplyAsync = (cardId) => async (dispatch) => {
       movieId: cardId,
       list: "wishlist",
     };
-
-    console.log(Object.entries(data) + "watched");
 
     await postMovies(data);
 
@@ -115,5 +109,21 @@ export const toggleDeleteAsync = (cardId) => async (dispatch) => {
     // Handle error
   }
 };
+
+export const togglePatchAsync = (cardId, movieId, listType) => async (dispatch) => {
+  try {
+    const data = {
+      _id: cardId,
+      owner: "petar",
+      movieId: movieId,
+      list: [listType],
+    };
+
+    await patchMovies(data);
+  } catch (error) {
+    // Handle error
+  }
+};
+
 
 export default cardSlice.reducer;

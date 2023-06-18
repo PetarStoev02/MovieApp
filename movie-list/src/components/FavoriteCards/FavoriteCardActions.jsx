@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
@@ -12,33 +12,43 @@ import {
   toggleFavoriteAsync,
   toggleBookmarkAsync,
   toggleReplyAsync,
-  
+  togglePatchAsync,
 } from "../../reducers/cardReducer";
 
-export default function CardActionsComponent({ cardId }) {
-  const [isFavoriteClicked, setFavoriteClicked] = useState(false);
-  const [isBookmarkClicked, setBookmarkClicked] = useState(false);
-  const [isReplyClicked, setReplyClicked] = useState(false);
+export default function FavoriteCardActionsComponent({
+  cardId,
+  movieId,
+  listType,
+}) {
+  const [isFavoriteClicked, setFavoriteClicked] = useState(
+    listType === "favorite"
+  );
+  const [isBookmarkClicked, setBookmarkClicked] = useState(
+    listType === "watched"
+  );
+  const [isReplyClicked, setReplyClicked] = useState(listType === "wishlisted");
 
   const dispatch = useDispatch();
 
   const handleFavoriteClick = () => {
     setFavoriteClicked(!isFavoriteClicked);
-    dispatch(toggleFavorite(cardId));
-    dispatch(toggleFavoriteAsync(cardId));
+    setBookmarkClicked(false);
+    setReplyClicked(false);
+    dispatch(togglePatchAsync(cardId, movieId, "favorite"));
   };
 
   const handleBookmarkClick = () => {
     setBookmarkClicked(!isBookmarkClicked);
-    dispatch(toggleBookmark(cardId));
-    dispatch(toggleBookmarkAsync(cardId));
+    setReplyClicked(false);
+    setFavoriteClicked(false);
+    dispatch(togglePatchAsync(cardId, movieId, "watched"));
   };
 
   const handleReplyClick = () => {
     setReplyClicked(!isReplyClicked);
-    dispatch(toggleReply(cardId));
-    dispatch(toggleReplyAsync(cardId));
-    
+    setFavoriteClicked(false);
+    setBookmarkClicked(false);
+    dispatch(togglePatchAsync(cardId, movieId, "wishlisted"));
   };
 
   return (

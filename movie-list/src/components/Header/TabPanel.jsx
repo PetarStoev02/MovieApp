@@ -1,12 +1,9 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import Cards from "../Card/Cards";
-import MyMovies from "../FavoriteCards/MyMovies"
-import Filter from "../FilterMenu/Filter";
 import { Tabs, Tab, Typography, Box } from "@mui/material";
-
 import { useSelector, useDispatch } from "react-redux";
 import { setValue } from "../../reducers/tabReducer";
+import { Link } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -53,17 +50,20 @@ export default function BasicTabs() {
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={value} onChange={handleChange}>
-          <Tab label="Movie List" {...a11yProps(0)} />
-          <Tab label="My Movies" {...a11yProps(1)} />
+          <Tab
+            label="Movie List"
+            component={Link}
+            to="/"
+            {...a11yProps(0)}
+          />
+          <Tab
+            label="My Movies"
+            component={Link}
+            to="/collection"
+            {...a11yProps(1)}
+          />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
-        <Cards />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Filter />
-        < MyMovies />
-      </TabPanel>
     </Box>
   );
 }
