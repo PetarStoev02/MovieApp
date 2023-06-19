@@ -34,7 +34,8 @@ export default function FavoriteCardActionsComponent({
     setFavoriteClicked(!isFavoriteClicked);
     setBookmarkClicked(false);
     setReplyClicked(false);
-    dispatch(togglePatchAsync(cardId, movieId, "favorite"));
+    dispatch(togglePatchAsync(cardId, movieId, "favorites"));
+    window.location.reload();
   };
 
   const handleBookmarkClick = () => {
@@ -42,13 +43,15 @@ export default function FavoriteCardActionsComponent({
     setReplyClicked(false);
     setFavoriteClicked(false);
     dispatch(togglePatchAsync(cardId, movieId, "watched"));
+    window.location.reload();
   };
 
   const handleReplyClick = () => {
     setReplyClicked(!isReplyClicked);
     setFavoriteClicked(false);
     setBookmarkClicked(false);
-    dispatch(togglePatchAsync(cardId, movieId, "wishlisted"));
+    dispatch(togglePatchAsync(cardId, movieId, "wishlist"));
+    window.location.reload();
   };
 
   return (

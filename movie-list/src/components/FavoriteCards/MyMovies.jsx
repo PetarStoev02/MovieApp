@@ -73,36 +73,51 @@ const MyMovies = () => {
             getMoviesByListType(data, "wishlist"),
           ]);
 
-          const favoriteResults = favoriteData.results.map((movie) => {
-            const matchedDataMovie = data.find(
-              (dataMovie) => dataMovie.movieId === movie.id
-            );
-            return matchedDataMovie
-              ? { ...movie, _id: matchedDataMovie._id, list: "favorite" }
-              : movie;
-          });
+          const favoriteResults =
+            favoriteData && favoriteData.results
+              ? favoriteData.results.map((movie) => {
+                  const matchedDataMovie = data.find(
+                    (dataMovie) => dataMovie.movieId === movie.id
+                  );
+                  return matchedDataMovie
+                    ? { ...movie, _id: matchedDataMovie._id, list: "favorite" }
+                    : movie;
+                })
+              : [];
 
-          const watchedResults = watchedData.results.map((movie) => {
-            const matchedDataMovie = data.find(
-              (dataMovie) => dataMovie.movieId === movie.id
-            );
-            return matchedDataMovie
-              ? { ...movie, _id: matchedDataMovie._id, list: "watched" }
-              : movie;
-          });
+          const watchedResults =
+            watchedData && watchedData.results
+              ? watchedData.results.map((movie) => {
+                  const matchedDataMovie = data.find(
+                    (dataMovie) => dataMovie.movieId === movie.id
+                  );
+                  return matchedDataMovie
+                    ? { ...movie, _id: matchedDataMovie._id, list: "watched" }
+                    : movie;
+                })
+              : [];
 
-          const wishlistedResults = wishlistedData.results.map((movie) => {
-            const matchedDataMovie = data.find(
-              (dataMovie) => dataMovie.movieId === movie.id
-            );
-            return matchedDataMovie
-              ? { ...movie, _id: matchedDataMovie._id, list: "wishlisted" }
-              : movie;
-          });
+          const wishlistedResults =
+            wishlistedData && wishlistedData.results
+              ? wishlistedData.results.map((movie) => {
+                  const matchedDataMovie = data.find(
+                    (dataMovie) => dataMovie.movieId === movie.id
+                  );
+                  return matchedDataMovie
+                    ? {
+                        ...movie,
+                        _id: matchedDataMovie._id,
+                        list: "wishlisted",
+                      }
+                    : movie;
+                })
+              : [];
 
           dispatch(setFavoriteMovies(favoriteResults));
           dispatch(setWatchedMovies(watchedResults));
           dispatch(setwishlistedMovies(wishlistedResults));
+
+          
         } else {
           console.error(
             "Failed to get movies:",
@@ -118,6 +133,8 @@ const MyMovies = () => {
 
     fetchData();
   }, []);
+
+  
 
   return (
     <div>
